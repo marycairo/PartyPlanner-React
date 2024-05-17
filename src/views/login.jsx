@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { TextField, Button, Container, Box, Grid, Typography } from '@mui/material'
 
+
 const LoginView = () => {
   return (
     <Container maxWidth="xs" className='main'>
@@ -17,6 +18,8 @@ const LoginView = () => {
         <Typography component="h1" variant="h5" style={{ marginBottom: '1rem' }} >
           Iniciar sesión
         </Typography>
+        
+        
 
         <form
           style={{

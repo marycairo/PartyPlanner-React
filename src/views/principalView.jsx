@@ -2,10 +2,12 @@ import { Container, Grid } from "@mui/material"
 import EventRoomCard from "src/components/roomCard"
 import { useState } from 'react'
 import BasicModal from "src/components/modalReservar"
+import TextField from '@mui/material/TextField'
 
 const PrincipalView = () => {
     const [openModal, setOpenModal] = useState(false)
     const [selectedRoom, setSelectedRoom] = useState(null)
+    const [términoDeBúsqueda, setTerminoDeBúsqueda] = useState('') // Estado para el término de búsqueda
 
     const roomsData = [
         {
@@ -35,17 +37,43 @@ const PrincipalView = () => {
         setOpenModal(false)
     }
 
+    const manejarCambioBúsqueda = (evento) => {
+        setTerminoDeBúsqueda(evento.target.value.toLowerCase()) // Normalizar término de búsqueda
+      }
+    
+    //   const salasFiltradas = datosSalones.filter((sala) =>
+    //     sala.nombre.toLowerCase().includes(términoDeBúsqueda) || // Buscar por nombre de sala
+    //     sala.localidad.toLowerCase().includes(términoDeBúsqueda) // Buscar por localidad
+    //   )
+
     return (
-        <Container className="main" style={{ marginBottom: "5rem" }}>
-            <Grid container spacing={3} justifyContent="center">
-                {roomsData.map((room, index) =>
-                    <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
-                        <EventRoomCard room={room} onClick={() => handleRoomClick(room)} />
-                    </Grid>
-                )}
+      <Container className="main" style={{ marginBottom: '5rem' }}>
+        <TextField
+          label="Buscar salas"
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          value={términoDeBúsqueda}
+          onChange={manejarCambioBúsqueda}
+          placeholder="Nombre del salón o localidad"
+          helperText="Filtrar por nombre del salón o localidad" // Texto de ayuda opcional
+        />
+        <Grid container spacing={3} justifyContent="center">
+          {roomsData.map((room, index) => (
+            <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
+              <EventRoomCard
+                room={room}
+                onClick={() => handleRoomClick(room)}
+              />
             </Grid>
-            <BasicModal openModal={openModal} cerrarModal={handleCloseModal} seleccion={selectedRoom} />
-        </Container>
+          ))}
+        </Grid>
+        <BasicModal
+          openModal={openModal}
+          cerrarModal={handleCloseModal}
+          seleccion={selectedRoom}
+        />
+      </Container>
     )
 }
 
